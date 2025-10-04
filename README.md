@@ -1,79 +1,77 @@
-Database Schema for Educational Management System
+# 🎓 Educational Management System Database Schema
 
-This database schema is designed to manage masters (subjects), mentors, groups, students, and lesson timetables in an educational context.
+This repository contains the SQL schema and sample data for managing **masters (subjects)**, **mentors**, **groups**, **students**, and **lesson timetables** in an educational setting.
 
-Tables Overview
+---
 
-masters: Stores unique subjects.
+## 🗂️ Tables Overview
 
-mentors: Stores mentor details linked to a subject (master_id).
+| Table           | Description                                   |
+|-----------------|-----------------------------------------------|
+| `masters`       | Stores unique subjects                        |
+| `mentors`       | Stores mentor details linked to subjects     |
+| `groups`        | Stores group information linked to mentors   |
+| `students`      | Stores student details linked to groups      |
+| `lessonstimetable` | Stores lesson times and rooms for each group |
 
-groups: Stores group information linked to a mentor (mentor_id).
+---
 
-students: Stores student details linked to a group (group_id).
+## 📋 Schema Details
 
-lessonstimetable: Stores lesson times and rooms for each group.
+### 🧑‍🏫 `masters`
+- `id`: Primary key, auto-increment  
+- `subject`: Unique subject name, **NOT NULL**
 
-Schema Details
-masters
+### 👨‍🏫 `mentors`
+- `id`: Primary key, auto-increment  
+- `firstname`, `lastname`: Mentor names, **NOT NULL**  
+- `master_id`: Foreign key referencing `masters(id)`, cascades on delete  
 
-id: Primary key, auto-increment.
+### 👥 `groups`
+- `id`: Primary key, auto-increment  
+- `title`: Group title, **NOT NULL**  
+- `mentor_id`: Foreign key referencing `mentors(id)`, cascades on delete  
 
-subject: Unique subject name, not null.
+### 🧑‍🎓 `students`
+- `id`: Primary key, auto-increment  
+- `firstname`, `lastname`: Student names, **NOT NULL**  
+- `group_id`: Foreign key referencing `groups(id)` (note: fix typo from `gruop`)  
 
-mentors
+### 📅 `lessonstimetable`
+- `id`: Primary key, auto-increment  
+- `group_id`: Foreign key referencing `groups(id)`  
+- `time`: Lesson time, **NOT NULL**  
+- `room`: Room number, **NOT NULL**  
+- Unique constraint on `group_id`  
 
-id: Primary key, auto-increment.
+---
 
-firstname, lastname: Mentor names, not null.
+## 🔢 Sample Data Included
 
-master_id: Foreign key referencing masters(id), cascades on delete.
+- **Subjects**: IT, English  
+- **Mentors** linked to subjects  
+- **Groups** linked to mentors  
+- **Students** linked to groups  
+- **Lesson schedules** linked to groups with unique lesson times  
 
-groups
+---
 
-id: Primary key, auto-increment.
+## ⚠️ Important Notes
 
-title: Group title, not null.
+- Foreign keys use `ON DELETE CASCADE` to maintain referential integrity  
+- Fix the typo in the `students` table foreign key reference (`gruop` → `groups`)  
+- Each group has a unique lesson schedule in `lessonstimetable`  
 
-mentor_id: Foreign key referencing mentors(id), cascades on delete.
+---
 
-students
+## 🚀 Usage
 
-id: Primary key, auto-increment.
+You can create the tables and insert sample data by running the provided SQL scripts in your preferred SQL environment.
 
-firstname, lastname: Student names, not null.
+---
 
-group_id: Foreign key referencing groups(id) (note: fix typo from gruop).
+*Feel free to contribute or open issues if you find bugs or want enhancements!*
 
-lessonstimetable
+---
 
-id: Primary key, auto-increment.
-
-group_id: Foreign key referencing groups(id).
-
-time: Lesson time, not null.
-
-room: Room number, not null.
-
-Unique constraint on group_id.
-
-Sample Data Inserted
-
-Subjects: IT, English.
-
-Mentors linked to subjects.
-
-Groups linked to mentors.
-
-Students linked to groups.
-
-Lesson schedules linked to groups with unique group times.
-
-Notes
-
-Foreign key constraints use ON DELETE CASCADE to maintain referential integrity.
-
-Ensure to fix the typo in the students table foreign key reference (gruop → groups).
-
-The lessonstimetable enforces one unique schedule per group.
-
+© 2025 Educational Management System  
